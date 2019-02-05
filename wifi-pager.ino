@@ -46,9 +46,10 @@ void setup() {
   pinMode(BUTTON_A, INPUT_PULLUP);
   pinMode(BUTTON_B, INPUT_PULLUP);
   pinMode(BUTTON_C, INPUT_PULLUP);
-  
-//  // initialize digital pin 13 as an output.
-//  pinMode(13, OUTPUT);
+
+  //DEBUG
+  // initialize digital pin 13 as an output.
+  //pinMode(13, OUTPUT);
 
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Address 0x3C for 128x32
@@ -60,18 +61,18 @@ void setup() {
 
   // text display tests
   display.setTextSize(1);
-  display.setTextColor(WHITE, BLACK); //set test white, background black to overwrite old text
+  display.setTextColor(WHITE, BLACK); //set text white, background black to overwrite old text
   display.setCursor(0,0);
 
+  //DEBUG
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
   
   //wait 1 second after display boot screen and also waiting for serial to go
   delay(1000);
 
-  //debug - warn self that waiting for serial
+  //DEBUG - warn self that waiting for serial
   display.clearDisplay();
-//  display.display();
   display.setCursor(0,0);
   display.print("Waiting for serial   connection..."); //spaces for pretty word wrap
     
@@ -86,16 +87,12 @@ void setup() {
       break;
     }
   }
-  
-  Serial.println("OLED begun");
-   
+     
   // Clear the buffer.
   display.clearDisplay();
   display.display();
  
   Serial.println("wifi-pager test");
-
-
 
   updateScreenData();
   updateRefreshTimeDisplay(0);
@@ -112,20 +109,13 @@ void loop() {
     previousMillisScreen = currentMillis;
     previousMillisRefresh = currentMillis;
     previousMillisRefreshCounter = 0;
-    //debug
+    //DEBUG
     Serial.println("Got into loop1");
     Serial.println(currentMillis);
 
     updateScreenData();
     updateRefreshTimeDisplay(previousMillisRefreshCounter);
   
-//    // Clear the buffer.
-//    display.clearDisplay();
-//    display.display();
-//    display.setCursor(0,0);
-//    display.print("Battery voltage is: ");
-//    display.print(analogRead(BUTTON_A)*2*3.3/1024);
-//    display.display();
   }
 
   //display refreshed time
@@ -135,11 +125,6 @@ void loop() {
 
     //tack on refresh counter/timer
     updateRefreshTimeDisplay(previousMillisRefreshCounter);
-//    display.setCursor(0,16);
-//    display.print("Updated ");
-//    display.print(previousMillisRefreshCounter);
-//    display.print("min ago");
-//    display.display();
   }
 
 //  if(!digitalRead(BUTTON_A)) display.print("A");
@@ -176,12 +161,8 @@ void loop() {
   delay(10);
   yield();
   display.display();
-  
-//  digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
-//  delay(200);              // wait for a second
-//  digitalWrite(13, LOW);    // turn the LED off by making the voltage LOW
-//  delay(200);              // wait for a second
-  
+
+  //DEBUG
 //  float measuredvbat = analogRead(VBATPIN);
 //  measuredvbat *= 2;    // we divided by 2, so multiply back
 //  measuredvbat *= 3.3;  // Multiply by 3.3V, our reference voltage
@@ -201,15 +182,16 @@ void updateScreenData(){
 
 void updateRefreshTimeDisplay(int x){
   //tack on refresh counter/timer
-//  display.setCursor(0,16);
-//  display.print("TlTLTLTLTL"); //test of lines at top and bottom of text line to see no overlaps
+  //DEBUG
+  //display.setCursor(0,16);
+  //display.print("TlTLTLTLTL"); //test of lines at top and bottom of text line to see no overlaps
   display.setCursor(0,24);
   display.print("Updated ");
   display.print(x);
   if(x == 1){
-    display.print("min ago "); //don't forget extra space at end to overwrite text correctly
+    display.print(" min ago "); //don't forget extra space at end to overwrite text correctly
   } else {
-    display.print("mins ago");
+    display.print(" mins ago");
   }
   display.display();
 }
